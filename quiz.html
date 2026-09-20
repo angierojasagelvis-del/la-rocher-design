@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Descubre tu estilo — La Rocher Design</title>
+<meta name="description" content="Responde 5 preguntas breves y descubre tu perfil de diseño de interiores: Botánico Contemporáneo, Editorial Terroso, Minimalista Cálido o Ecléctico Colombiano.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23F2EDE3' stroke='%237A9E6E' stroke-width='2'/%3E%3Ctext x='32' y='40' font-family='Georgia,serif' font-size='22' fill='%237A9E6E' text-anchor='middle'%3ELR%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream:#F2EDE3; --cream2:#EAE3D6; --cream3:#DDD5C5;
+  --sage:#7A9E6E; --sage-lt:#B8D1AF; --sage-dk:#4E7243;
+  --burg:#7D3B47; --burg-lt:#C4909A;
+  --earth:#8B6040; --earth-lt:#C4A882;
+  --rose:#C4A09A; --ebony:#2C2820; --ebony2:#3D3630;
+  --white:#FFFFFF;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--cream);color:var(--ebony);font-family:'Jost',sans-serif;font-weight:300;overflow-x:hidden;}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
+/* NAV (shared) */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(242,237,227,0.92);backdrop-filter:blur(12px);border-bottom:0.5px solid var(--cream3);padding:0 5vw;}
+.nav-inner{max-width:1200px;margin:0 auto;height:64px;display:flex;align-items:center;justify-content:space-between;}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.nav-monogram{width:36px;height:36px;border:1px solid var(--sage);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--sage);}
+.nav-brand{font-family:'Cormorant Garamond',serif;font-size:13px;letter-spacing:0.18em;color:var(--earth);text-transform:uppercase;}
+.nav-links{display:flex;gap:32px;list-style:none;}
+.nav-links a{font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ebony2);text-decoration:none;transition:color 0.2s;}
+.nav-links a:hover{color:var(--sage);}
+.nav-cta{padding:9px 22px;background:var(--ebony);color:var(--cream);font-family:'Jost',sans-serif;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;border-radius:40px;transition:background 0.25s;}
+.nav-cta:hover{background:var(--burg);}
+@media(max-width:900px){.nav-links{display:none;}}
+
+/* QUIZ SHELL */
+.quiz-wrap{max-width:720px;margin:0 auto;padding:140px 5vw 100px;min-height:100vh;}
+.quiz-eyebrow{font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--sage);margin-bottom:14px;text-align:center;}
+.quiz-title{font-family:'Cormorant Garamond',serif;font-size:clamp(30px,4vw,46px);font-weight:300;line-height:1.2;text-align:center;margin-bottom:16px;}
+.quiz-title em{font-style:italic;color:var(--burg);}
+.quiz-intro-body{font-size:15px;line-height:1.9;color:var(--ebony2);text-align:center;max-width:480px;margin:0 auto 40px;}
+
+.progress-track{height:2px;background:var(--cream3);border-radius:2px;margin-bottom:48px;overflow:hidden;}
+.progress-fill{height:100%;background:var(--sage);width:0%;transition:width 0.5s ease;}
+
+.start-btn,.next-hint{display:block;margin:0 auto;}
+.start-btn{padding:16px 44px;background:var(--ebony);color:var(--cream);border:none;border-radius:40px;font-family:'Jost',sans-serif;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;transition:all 0.25s;}
+.start-btn:hover{background:var(--burg);transform:translateY(-2px);}
+
+.q-panel{display:none;}
+.q-panel.active{display:block;animation:fadeUp 0.5s ease;}
+.q-num{font-family:'Cormorant Garamond',serif;font-size:13px;color:var(--rose);letter-spacing:0.1em;text-align:center;margin-bottom:10px;}
+.q-text{font-family:'Cormorant Garamond',serif;font-size:clamp(22px,3vw,32px);font-weight:400;text-align:center;line-height:1.3;margin-bottom:40px;}
+.q-options{display:flex;flex-direction:column;gap:12px;}
+.q-option{background:var(--white);border:0.5px solid var(--cream3);border-radius:12px;padding:20px 24px;font-size:14px;color:var(--ebony2);text-align:left;cursor:pointer;transition:all 0.2s;}
+.q-option:hover{border-color:var(--sage);background:var(--cream2);}
+.q-option.selected{border-color:var(--sage);background:var(--sage);color:var(--white);}
+
+/* RESULT */
+.result-panel{display:none;text-align:center;}
+.result-panel.active{display:block;animation:fadeUp 0.6s ease;}
+.result-icon{width:64px;height:64px;border:1px solid var(--sage);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--sage);margin:0 auto 24px;}
+.result-eyebrow{font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--sage);margin-bottom:12px;}
+.result-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4.5vw,52px);font-weight:300;margin-bottom:20px;}
+.result-title em{font-style:italic;color:var(--burg);}
+.result-desc{font-size:15px;line-height:1.9;color:var(--ebony2);max-width:540px;margin:0 auto 32px;}
+.result-palette{display:flex;justify-content:center;gap:10px;margin-bottom:32px;}
+.result-swatch{width:32px;height:32px;border-radius:50%;border:2px solid var(--white);box-shadow:0 0 0 1px var(--cream3);}
+.result-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:40px;}
+.result-tag{padding:8px 18px;border:0.5px solid var(--earth-lt);border-radius:20px;font-size:12px;color:var(--earth);}
+.result-ctas{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+.result-btn-primary{padding:16px 36px;background:var(--ebony);color:var(--cream);text-decoration:none;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;border-radius:40px;transition:all 0.25s;}
+.result-btn-primary:hover{background:var(--burg);transform:translateY(-2px);}
+.result-btn-outline{padding:16px 36px;border:1px solid var(--sage);color:var(--sage);text-decoration:none;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;border-radius:40px;transition:all 0.25s;}
+.result-btn-outline:hover{background:var(--sage);color:var(--white);}
+.restart-link{display:block;margin-top:28px;font-size:12px;color:var(--earth-lt);text-decoration:underline;cursor:pointer;background:none;border:none;font-family:'Jost',sans-serif;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+
+/* FOOTER (shared, condensed) */
+footer{background:var(--ebony2);padding:40px 5vw;text-align:center;}
+footer p{font-size:12px;color:var(--earth-lt);}
+footer a{color:var(--rose);text-decoration:none;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-monogram">LR</div>
+      <span class="nav-brand">La Rocher Design</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#servicios">Servicios</a></li>
+      <li><a href="configurador.html">Diseña tu cojín</a></li>
+      <li><a href="index.html#proyectos">Proyectos</a></li>
+    </ul>
+    <a href="la_rocher_reserva.html" class="nav-cta">Agenda tu sesión</a>
+  </div>
+</nav>
+
+<main class="quiz-wrap">
+
+  <!-- INTRO -->
+  <div id="introPanel">
+    <div class="quiz-eyebrow">Quiz de estilo</div>
+    <h1 class="quiz-title">Descubre qué perfil de<br><em>diseño</em> te representa</h1>
+    <p class="quiz-intro-body">5 preguntas breves. Sin respuestas correctas ni incorrectas — solo una lectura honesta de lo que tu espacio necesita para sentirse tuyo.</p>
+    <button class="start-btn" onclick="startQuiz()">Empezar el quiz</button>
+  </div>
+
+  <!-- QUIZ -->
+  <div id="quizPanel" style="display:none;">
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+    <div class="q-panel active" data-q="0">
+      <div class="q-num">Pregunta 1 de 5</div>
+      <div class="q-text">¿Cómo te gustaría que se sintiera tu espacio al entrar?</div>
+      <div class="q-options">
+        <button class="q-option" data-p="botanico">Envuelto en verde y luz natural, como un jardín interior</button>
+        <button class="q-option" data-p="editorial">Como abrir una revista de diseño: cada detalle con intención</button>
+        <button class="q-option" data-p="minimalista">En calma total, sin ruido visual, solo lo esencial</button>
+        <button class="q-option" data-p="ecléctico">Lleno de color, textura y objetos con historia propia</button>
+      </div>
+    </div>
+
+    <div class="q-panel" data-q="1">
+      <div class="q-num">Pregunta 2 de 5</div>
+      <div class="q-text">Si tu casa fuera un material, ¿cuál sería?</div>
+      <div class="q-options">
+        <button class="q-option" data-p="botanico">Madera clara, con textura orgánica y algo de musgo</button>
+        <button class="q-option" data-p="editorial">Lino crudo y cuero envejecido</button>
+        <button class="q-option" data-p="minimalista">Piedra pulida en tonos marfil y ébano</button>
+        <button class="q-option" data-p="ecléctico">Cerámica pintada a mano y tejidos artesanales</button>
+      </div>
+    </div>
+
+    <div class="q-panel" data-q="2">
+      <div class="q-num">Pregunta 3 de 5</div>
+      <div class="q-text">¿Qué color te representa más ahora mismo?</div>
+      <div class="q-options">
+        <button class="q-option" data-p="botanico">Verde salvia</button>
+        <button class="q-option" data-p="editorial">Terracota y tonos tierra</button>
+        <button class="q-option" data-p="minimalista">Marfil y ébano</button>
+        <button class="q-option" data-p="ecléctico">Una mezcla de tonos vivos</button>
+      </div>
+    </div>
+
+    <div class="q-panel" data-q="3">
+      <div class="q-num">Pregunta 4 de 5</div>
+      <div class="q-text">Un fin de semana ideal se ve así:</div>
+      <div class="q-options">
+        <button class="q-option" data-p="botanico">Caminando entre plantas en un vivero o jardín botánico</button>
+        <button class="q-option" data-p="editorial">En una galería de arte o leyendo sobre arquitectura</button>
+        <button class="q-option" data-p="minimalista">En silencio, con un café, sin nada planeado</button>
+        <button class="q-option" data-p="ecléctico">En un mercado artesanal, buscando piezas únicas</button>
+      </div>
+    </div>
+
+    <div class="q-panel" data-q="4">
+      <div class="q-num">Pregunta 5 de 5</div>
+      <div class="q-text">¿Qué quieres que tu espacio le diga a quien lo visita?</div>
+      <div class="q-options">
+        <button class="q-option" data-p="botanico">Que la naturaleza y la calma viven aquí</button>
+        <button class="q-option" data-p="editorial">Que aquí vive alguien con una mirada curada y consciente</button>
+        <button class="q-option" data-p="minimalista">Que menos es más, y cada objeto tiene su lugar</button>
+        <button class="q-option" data-p="ecléctico">Que esta casa cuenta una historia de viajes y color</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="resultPanel" class="result-panel">
+    <div class="result-icon" id="resultIcon">✦</div>
+    <div class="result-eyebrow">Tu perfil de diseño</div>
+    <h2 class="result-title" id="resultTitle"></h2>
+    <p class="result-desc" id="resultDesc"></p>
+    <div class="result-palette" id="resultPalette"></div>
+    <div class="result-tags" id="resultTags"></div>
+    <div class="result-ctas">
+      <a href="#" id="ctaConfigurador" class="result-btn-primary">Diseñar mi cojín</a>
+      <a href="index.html#servicios" class="result-btn-outline">Ver servicios</a>
+    </div>
+    <button class="restart-link" onclick="restartQuiz()">Volver a hacer el quiz</button>
+  </div>
+
+</main>
+
+<footer>
+  <p>© 2026 La Rocher Design · <a href="index.html">Volver al inicio</a> · <a href="https://wa.me/573172621528" target="_blank">WhatsApp</a></p>
+</footer>
+
+<script>
+const PROFILES = {
+  botanico: {
+    title: 'Botánico <em>Contemporáneo</em>',
+    desc: 'Tu espacio florece desde adentro. Buscas líneas orgánicas, luz natural y materiales que respiran — madera cruda, plantas vivas y textiles naturales que envejecen con carácter.',
+    palette: ['#7A9E6E','#B8D1AF','#DDD5C5'],
+    tags: ['Diseño Interior Residencial','Materiales naturales','Luz natural'],
+    icon: '✦'
+  },
+  editorial: {
+    title: 'Editorial <em>Terroso</em>',
+    desc: 'Tu estilo tiene la precisión de una revista bien diseñada: paletas cálidas, formas limpias y una narrativa clara en cada rincón, sin nada fuera de lugar.',
+    palette: ['#8B6040','#7D3B47','#C4A882'],
+    tags: ['Diseño Airbnb & Apartamentos Modelo','Paleta cálida','Curaduría de piezas'],
+    icon: '◆'
+  },
+  minimalista: {
+    title: 'Minimalista <em>Cálido</em>',
+    desc: 'Crees en el lujo silencioso: espacios despejados, materiales nobles y una paleta contenida entre marfil y ébano donde cada objeto tiene una razón de estar.',
+    palette: ['#2C2820','#F2EDE3','#C4A09A'],
+    tags: ['Proyectos Internacionales (USD)','Lujo silencioso','Paleta contenida'],
+    icon: '○'
+  },
+  'ecléctico': {
+    title: 'Ecléctico <em>Colombiano</em>',
+    desc: 'Tu casa es un mapa de historias: colores, texturas y piezas artesanales que cuentan de dónde vienes y por dónde has pasado, sin miedo a mezclar.',
+    palette: ['#C4A09A','#7A9E6E','#7D3B47'],
+    tags: ['Curación de artesanos colombianos','Piezas únicas','Color y textura'],
+    icon: '❖'
+  }
+};
+
+let currentQ = 0;
+const totalQ = 5;
+const scores = {botanico:0, editorial:0, minimalista:0, 'ecléctico':0};
+
+function startQuiz(){
+  document.getElementById('introPanel').style.display = 'none';
+  document.getElementById('quizPanel').style.display = 'block';
+  updateProgress();
+}
+
+function updateProgress(){
+  document.getElementById('progressFill').style.width = ((currentQ)/totalQ*100) + '%';
+}
+
+document.querySelectorAll('.q-option').forEach(btn=>{
+  btn.addEventListener('click', function(){
+    const panel = this.closest('.q-panel');
+    panel.querySelectorAll('.q-option').forEach(b=>b.classList.remove('selected'));
+    this.classList.add('selected');
+    scores[this.dataset.p]++;
+    setTimeout(()=>{
+      currentQ++;
+      if(currentQ < totalQ){
+        panel.classList.remove('active');
+        document.querySelector(`.q-panel[data-q="${currentQ}"]`).classList.add('active');
+        updateProgress();
+      } else {
+        finishQuiz();
+      }
+    }, 350);
+  });
+});
+
+function finishQuiz(){
+  document.getElementById('progressFill').style.width = '100%';
+  let winner = 'botanico';
+  let max = -1;
+  for(const key in scores){
+    if(scores[key] > max){ max = scores[key]; winner = key; }
+  }
+  const p = PROFILES[winner];
+  document.getElementById('resultIcon').textContent = p.icon;
+  document.getElementById('resultTitle').innerHTML = p.title;
+  document.getElementById('resultDesc').textContent = p.desc;
+  document.getElementById('resultPalette').innerHTML = p.palette.map(c=>`<div class="result-swatch" style="background:${c};"></div>`).join('');
+  document.getElementById('resultTags').innerHTML = p.tags.map(t=>`<span class="result-tag">${t}</span>`).join('');
+  document.getElementById('ctaConfigurador').href = `configurador.html?estilo=${winner}`;
+
+  setTimeout(()=>{
+    document.getElementById('quizPanel').style.display = 'none';
+    document.getElementById('resultPanel').classList.add('active');
+  }, 300);
+}
+
+function restartQuiz(){
+  currentQ = 0;
+  for(const k in scores) scores[k] = 0;
+  document.querySelectorAll('.q-option').forEach(b=>b.classList.remove('selected'));
+  document.querySelectorAll('.q-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelector('.q-panel[data-q="0"]').classList.add('active');
+  document.getElementById('resultPanel').classList.remove('active');
+  document.getElementById('quizPanel').style.display = 'none';
+  document.getElementById('introPanel').style.display = 'block';
+  updateProgress();
+}
+</script>
+</body>
+</html>
