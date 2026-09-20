@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diseña tu cojín — La Rocher Design</title>
+<meta name="description" content="Personaliza tu cojín a medida: elige forma, tamaño, tela, color, textura y acabados, y ve tu diseño en tiempo real antes de solicitarlo.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23F2EDE3' stroke='%237A9E6E' stroke-width='2'/%3E%3Ctext x='32' y='40' font-family='Georgia,serif' font-size='22' fill='%237A9E6E' text-anchor='middle'%3ELR%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream:#F2EDE3; --cream2:#EAE3D6; --cream3:#DDD5C5;
+  --sage:#7A9E6E; --sage-lt:#B8D1AF; --sage-dk:#4E7243;
+  --burg:#7D3B47; --burg-lt:#C4909A;
+  --earth:#8B6040; --earth-lt:#C4A882;
+  --rose:#C4A09A; --ebony:#2C2820; --ebony2:#3D3630;
+  --white:#FFFFFF;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--cream);color:var(--ebony);font-family:'Jost',sans-serif;font-weight:300;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(242,237,227,0.94);backdrop-filter:blur(12px);border-bottom:0.5px solid var(--cream3);padding:0 5vw;}
+.nav-inner{max-width:1300px;margin:0 auto;height:64px;display:flex;align-items:center;justify-content:space-between;}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.nav-monogram{width:36px;height:36px;border:1px solid var(--sage);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--sage);}
+.nav-brand{font-family:'Cormorant Garamond',serif;font-size:13px;letter-spacing:0.18em;color:var(--earth);text-transform:uppercase;}
+.nav-cta{padding:9px 22px;background:var(--ebony);color:var(--cream);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;border-radius:40px;transition:background 0.25s;}
+.nav-cta:hover{background:var(--burg);}
+
+/* LAYOUT */
+.wrap{max-width:1300px;margin:0 auto;padding:100px 5vw 80px;display:grid;grid-template-columns:1fr 440px;gap:60px;align-items:start;}
+@media(max-width:980px){.wrap{grid-template-columns:1fr;padding-top:90px;}}
+
+.page-eyebrow{font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--sage);margin-bottom:10px;}
+.page-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,3.5vw,42px);font-weight:300;margin-bottom:32px;}
+.page-title em{font-style:italic;color:var(--burg);}
+
+/* PREVIEW (sticky, left) */
+.preview-col{position:sticky;top:100px;}
+.preview-stage{background:var(--white);border:0.5px solid var(--cream3);border-radius:20px;padding:60px 40px;display:flex;align-items:center;justify-content:center;min-height:420px;margin-bottom:20px;}
+.pillow{width:220px;height:220px;position:relative;transition:all 0.4s ease;box-shadow:0 20px 50px rgba(44,40,32,0.14), inset 0 0 0 1px rgba(0,0,0,0.05);}
+.pillow::before{content:'';position:absolute;inset:14px;border:1px dashed rgba(255,255,255,0.35);border-radius:inherit;pointer-events:none;}
+.pillow-pattern-liso{}
+.pillow-pattern-rayas{background-image:repeating-linear-gradient(45deg, rgba(255,255,255,0.18) 0, rgba(255,255,255,0.18) 10px, transparent 10px, transparent 22px);}
+.pillow-pattern-bordado{background-image:radial-gradient(circle, rgba(255,255,255,0.35) 1.5px, transparent 1.6px);background-size:22px 22px;}
+.pillow-pattern-geometrico{background-image:linear-gradient(45deg, rgba(255,255,255,0.18) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.18) 75%), linear-gradient(45deg, rgba(255,255,255,0.18) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.18) 75%);background-size:28px 28px;background-position:0 0, 14px 14px;}
+.preview-summary{background:var(--white);border:0.5px solid var(--cream3);border-radius:16px;padding:24px;font-size:13px;color:var(--ebony2);line-height:2;}
+.preview-summary strong{color:var(--ebony);font-weight:500;}
+.preview-price{font-family:'Cormorant Garamond',serif;font-size:32px;color:var(--ebony);margin-top:8px;}
+.preview-price small{font-size:12px;color:var(--earth-lt);font-family:'Jost',sans-serif;display:block;margin-top:4px;}
+
+/* STEPS (right) */
+.step{margin-bottom:36px;}
+.step-label{font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sage);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.step-label .step-index{width:20px;height:20px;border:1px solid var(--sage);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:11px;}
+.pill-row{display:flex;flex-wrap:wrap;gap:10px;}
+.opt-pill{background:var(--white);border:0.5px solid var(--cream3);border-radius:30px;padding:10px 20px;font-size:13px;color:var(--ebony2);cursor:pointer;transition:all 0.2s;font-family:'Jost',sans-serif;}
+.opt-pill:hover{border-color:var(--sage);}
+.opt-pill.active{background:var(--ebony);color:var(--cream);border-color:var(--ebony);}
+.opt-pill .opt-extra{font-size:11px;color:var(--earth-lt);margin-left:6px;}
+.opt-pill.active .opt-extra{color:var(--rose);}
+
+.color-row{display:flex;flex-wrap:wrap;gap:12px;}
+.color-swatch{width:38px;height:38px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:all 0.2s;position:relative;}
+.color-swatch.active{border-color:var(--ebony);transform:scale(1.1);}
+.color-swatch::after{content:attr(data-name);position:absolute;bottom:-22px;left:50%;transform:translateX(-50%);font-size:10px;color:var(--earth-lt);white-space:nowrap;opacity:0;transition:opacity 0.2s;}
+.color-swatch:hover::after{opacity:1;}
+
+.qty-row{display:flex;align-items:center;gap:16px;}
+.qty-btn{width:36px;height:36px;border:1px solid var(--cream3);background:var(--white);border-radius:50%;font-size:16px;cursor:pointer;color:var(--ebony);transition:all 0.2s;}
+.qty-btn:hover{border-color:var(--sage);color:var(--sage);}
+.qty-value{font-family:'Cormorant Garamond',serif;font-size:22px;min-width:24px;text-align:center;}
+
+.order-btn{width:100%;padding:18px;background:var(--ebony);color:var(--cream);border:none;border-radius:40px;font-family:'Jost',sans-serif;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;transition:all 0.25s;margin-top:8px;}
+.order-btn:hover{background:var(--burg);transform:translateY(-2px);}
+.order-note{font-size:11px;color:var(--earth-lt);text-align:center;margin-top:12px;line-height:1.6;}
+
+.price-flag{background:#f0ede7;border:0.5px dashed var(--rose);border-radius:10px;padding:10px 14px;font-size:11px;color:var(--earth);line-height:1.6;margin-top:14px;}
+
+/* SUCCESS OVERLAY */
+.overlay{position:fixed;inset:0;background:rgba(44,40,32,0.55);display:none;align-items:center;justify-content:center;z-index:200;padding:20px;}
+.overlay.visible{display:flex;}
+.overlay-card{background:var(--white);border-radius:20px;padding:44px 36px;max-width:420px;text-align:center;}
+.overlay-icon{width:56px;height:56px;border:1.5px solid var(--sage);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;color:var(--sage);font-size:22px;}
+.overlay-card h3{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;margin-bottom:10px;}
+.overlay-card p{font-size:14px;color:var(--ebony2);line-height:1.7;margin-bottom:24px;}
+.overlay-close{font-size:12px;color:var(--earth-lt);text-decoration:underline;cursor:pointer;background:none;border:none;font-family:'Jost',sans-serif;}
+
+footer{background:var(--ebony2);padding:40px 5vw;text-align:center;}
+footer p{font-size:12px;color:var(--earth-lt);}
+footer a{color:var(--rose);text-decoration:none;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-monogram">LR</div>
+      <span class="nav-brand">La Rocher Design</span>
+    </a>
+    <a href="la_rocher_reserva.html" class="nav-cta">Agenda tu sesión</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <!-- LEFT: PREVIEW -->
+  <div class="preview-col">
+    <div class="page-eyebrow">Configurador</div>
+    <h1 class="page-title">Diseña tu <em>cojín</em> a medida</h1>
+    <div class="preview-stage">
+      <div class="pillow pillow-pattern-liso" id="pillowPreview" style="background:#7A9E6E; border-radius:16px;"></div>
+    </div>
+    <div class="preview-summary" id="previewSummary">
+      <div><strong>Forma:</strong> <span id="sumForma">Cuadrado</span></div>
+      <div><strong>Tamaño:</strong> <span id="sumTamano">45 × 45 cm</span></div>
+      <div><strong>Tela:</strong> <span id="sumTela">Lino Belga</span></div>
+      <div><strong>Color:</strong> <span id="sumColor">Verde Salvia</span></div>
+      <div><strong>Textura:</strong> <span id="sumTextura">Liso</span></div>
+      <div><strong>Acabados:</strong> <span id="sumAcabados">Cierre invisible</span></div>
+      <div><strong>Cantidad:</strong> <span id="sumCantidad">1</span></div>
+      <div class="preview-price">
+        <span id="sumPrecio">$38 USD</span>
+        <small>Precio de ejemplo — a confirmar con Angie antes de publicar</small>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: STEPS -->
+  <div class="steps-col">
+
+    <div class="step">
+      <div class="step-label"><span class="step-index">1</span> Forma</div>
+      <div class="pill-row" data-group="forma">
+        <button class="opt-pill active" data-value="Cuadrado" data-shape="square">Cuadrado</button>
+        <button class="opt-pill" data-value="Rectangular" data-shape="rect">Rectangular</button>
+        <button class="opt-pill" data-value="Redondo" data-shape="round">Redondo</button>
+        <button class="opt-pill" data-value="Lumbar" data-shape="lumbar">Lumbar</button>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-label"><span class="step-index">2</span> Tamaño</div>
+      <div class="pill-row" data-group="tamano">
+        <button class="opt-pill active" data-value="40 × 40 cm" data-mult="1">40 × 40 cm</button>
+        <button class="opt-pill" data-value="45 × 45 cm" data-mult="1.1">45 × 45 cm</button>
+        <button class="opt-pill" data-value="50 × 50 cm" data-mult="1.25">50 × 50 cm</button>
+        <button class="opt-pill" data-value="60 × 40 cm" data-mult="1.15">60 × 40 cm</button>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-label"><span class="step-index">3</span> Tela</div>
+      <div class="pill-row" data-group="tela">
+        <button class="opt-pill active" data-value="Lino Belga" data-base="38">Lino Belga <span class="opt-extra">$38</span></button>
+        <button class="opt-pill" data-value="Algodón Orgánico" data-base="28">Algodón Orgánico <span class="opt-extra">$28</span></button>
+        <button class="opt-pill" data-value="Terciopelo" data-base="45">Terciopelo <span class="opt-extra">$45</span></button>
+        <button class="opt-pill" data-value="Yute Artesanal" data-base="50">Yute Artesanal <span class="opt-extra">$50</span></button>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-label"><span class="step-index">4</span> Color</div>
+      <div class="color-row" data-group="color">
+        <div class="color-swatch active" style="background:#7A9E6E;" data-value="Verde Salvia" data-name="Verde Salvia"></div>
+        <div class="color-swatch" style="background:#7D3B47;" data-value="Burdeos" data-name="Burdeos"></div>
+        <div class="color-swatch" style="background:#8B6040;" data-value="Tierra" data-name="Tierra"></div>
+        <div class="color-swatch" style="background:#F2EDE3;border:1px solid #DDD5C5;" data-value="Crema" data-name="Crema"></div>
+        <div class="color-swatch" style="background:#2C2820;" data-value="Ébano" data-name="Ébano"></div>
+        <div class="color-swatch" style="background:#C4A09A;" data-value="Rosa Arena" data-name="Rosa Arena"></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-label"><span class="step-index">5</span> Textura / Patrón</div>
+      <div class="pill-row" data-group="textura">
+        <button class="opt-pill active" data-value="Liso" data-pattern="liso">Liso</button>
+        <button class="opt-pill" data-value="Bordado botánico" data-pattern="bordado">Bordado botánico</button>
+        <button class="opt-pill" data-value="Rayas artesanales" data-pattern="rayas">Rayas artesanales</button>
+        <button class="opt-pill" data-value="Geométrico" data-pattern="geometrico">Geométrico</button>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-label"><span class="step-index">6</span> Acabados</div>
+      <div class="pill-row" data-group="acabados">
+        <button class="opt-pill active" data-value="Cierre invisible" data-extra="0">Cierre invisible</button>
+        <button class="opt-pill" data-value="Funda removible" data-extra="6">Funda removible <span class="opt-extra">+$6</span></button>
+        <button class="opt-pill" data-value="Relleno premium" data-extra="8">Relleno premium <span class="opt-extra">+$8</span></button>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-label"><span class="step-index">7</span> Cantidad</div>
+      <div class="qty-row">
+        <button class="qty-btn" onclick="changeQty(-1)">−</button>
+        <span class="qty-value" id="qtyValue">1</span>
+        <button class="qty-btn" onclick="changeQty(1)">+</button>
+      </div>
+    </div>
+
+    <button class="order-btn" onclick="createOrder()">Crear mi pedido</button>
+    <p class="order-note">Aún no tenemos pasarela de pago integrada. Al confirmar, se abrirá WhatsApp con tu configuración completa lista para enviar — no tendrás que escribirla de nuevo.</p>
+    <div class="price-flag">⚠ Los precios mostrados son de ejemplo. Angie: confirma la tarifa real por tela, tamaño y acabado antes de publicar esta página.</div>
+
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 La Rocher Design · <a href="index.html">Volver al inicio</a> · <a href="https://wa.me/573172621528" target="_blank">WhatsApp</a></p>
+</footer>
+
+<!-- SUCCESS OVERLAY -->
+<div class="overlay" id="successOverlay">
+  <div class="overlay-card">
+    <div class="overlay-icon">✦</div>
+    <h3>¡Tu pedido está listo!</h3>
+    <p>Se abrió WhatsApp con todos los detalles de tu diseño. Solo confirma el envío y te responderemos con el siguiente paso.</p>
+    <button class="overlay-close" onclick="document.getElementById('successOverlay').classList.remove('visible')">Cerrar</button>
+  </div>
+</div>
+
+<script>
+// ── PRECIOS DE EJEMPLO — pendiente de confirmación real por Angie ──
+const config = {
+  forma: 'Cuadrado', shape: 'square',
+  tamano: '40 × 40 cm', mult: 1,
+  tela: 'Lino Belga', base: 38,
+  color: 'Verde Salvia', colorHex: '#7A9E6E',
+  textura: 'Liso', pattern: 'liso',
+  acabados: 'Cierre invisible', extra: 0,
+  cantidad: 1
+};
+
+// Pre-select style from quiz query param, if present
+const urlParams = new URLSearchParams(window.location.search);
+const estiloMap = {
+  botanico: {color:'#7A9E6E', name:'Verde Salvia', tela:'Lino Belga', base:38},
+  editorial: {color:'#8B6040', name:'Tierra', tela:'Yute Artesanal', base:50},
+  minimalista: {color:'#2C2820', name:'Ébano', tela:'Algodón Orgánico', base:28},
+  'ecléctico': {color:'#7D3B47', name:'Burdeos', tela:'Terciopelo', base:45}
+};
+const estiloParam = urlParams.get('estilo');
+if (estiloParam && estiloMap[estiloParam]) {
+  const s = estiloMap[estiloParam];
+  config.colorHex = s.color; config.color = s.name; config.tela = s.tela; config.base = s.base;
+}
+
+function setActive(group, el){
+  document.querySelectorAll(`[data-group="${group}"] .opt-pill, [data-group="${group}"].color-row .color-swatch`).forEach(p=>p.classList.remove('active'));
+  el.classList.add('active');
+}
+
+document.querySelectorAll('.pill-row[data-group="forma"] .opt-pill').forEach(btn=>{
+  btn.addEventListener('click', function(){
+    setActive('forma', this);
+    config.forma = this.dataset.value; config.shape = this.dataset.shape;
+    updatePreview();
+  });
+});
+document.querySelectorAll('.pill-row[data-group="tamano"] .opt-pill').forEach(btn=>{
+  btn.addEventListener('click', function(){
+    setActive('tamano', this);
+    config.tamano = this.dataset.value; config.mult = parseFloat(this.dataset.mult);
+    updatePreview();
+  });
+});
+document.querySelectorAll('.pill-row[data-group="tela"] .opt-pill').forEach(btn=>{
+  btn.addEventListener('click', function(){
+    setActive('tela', this);
+    config.tela = this.dataset.value; config.base = parseFloat(this.dataset.base);
+    updatePreview();
+  });
+});
+document.querySelectorAll('.color-row .color-swatch').forEach(sw=>{
+  sw.addEventListener('click', function(){
+    document.querySelectorAll('.color-row .color-swatch').forEach(s=>s.classList.remove('active'));
+    this.classList.add('active');
+    config.color = this.dataset.value; config.colorHex = this.style.background;
+    updatePreview();
+  });
+});
+document.querySelectorAll('.pill-row[data-group="textura"] .opt-pill').forEach(btn=>{
+  btn.addEventListener('click', function(){
+    setActive('textura', this);
+    config.textura = this.dataset.value; config.pattern = this.dataset.pattern;
+    updatePreview();
+  });
+});
+document.querySelectorAll('.pill-row[data-group="acabados"] .opt-pill').forEach(btn=>{
+  btn.addEventListener('click', function(){
+    setActive('acabados', this);
+    config.acabados = this.dataset.value; config.extra = parseFloat(this.dataset.extra);
+    updatePreview();
+  });
+});
+
+function changeQty(delta){
+  config.cantidad = Math.max(1, Math.min(10, config.cantidad + delta));
+  document.getElementById('qtyValue').textContent = config.cantidad;
+  updatePreview();
+}
+
+function updatePreview(){
+  const pillow = document.getElementById('pillowPreview');
+  pillow.style.background = config.colorHex;
+  pillow.className = 'pillow pillow-pattern-' + config.pattern;
+  if(config.shape === 'square'){ pillow.style.borderRadius = '16px'; pillow.style.aspectRatio = '1/1'; pillow.style.width='220px'; pillow.style.height='220px'; }
+  if(config.shape === 'rect'){ pillow.style.borderRadius = '14px'; pillow.style.width='260px'; pillow.style.height='170px'; }
+  if(config.shape === 'round'){ pillow.style.borderRadius = '50%'; pillow.style.width='220px'; pillow.style.height='220px'; }
+  if(config.shape === 'lumbar'){ pillow.style.borderRadius = '30px'; pillow.style.width='280px'; pillow.style.height='140px'; }
+
+  document.getElementById('sumForma').textContent = config.forma;
+  document.getElementById('sumTamano').textContent = config.tamano;
+  document.getElementById('sumTela').textContent = config.tela;
+  document.getElementById('sumColor').textContent = config.color;
+  document.getElementById('sumTextura').textContent = config.textura;
+  document.getElementById('sumAcabados').textContent = config.acabados;
+  document.getElementById('sumCantidad').textContent = config.cantidad;
+
+  const unitPrice = Math.round((config.base * config.mult + config.extra) * 100) / 100;
+  const totalPrice = Math.round(unitPrice * config.cantidad * 100) / 100;
+  document.getElementById('sumPrecio').textContent = `$${totalPrice} USD`;
+}
+
+function createOrder(){
+  const unitPrice = Math.round((config.base * config.mult + config.extra) * 100) / 100;
+  const totalPrice = Math.round(unitPrice * config.cantidad * 100) / 100;
+  const msg = `Hola, quiero solicitar este cojín personalizado:\n\n` +
+    `• Forma: ${config.forma}\n` +
+    `• Tamaño: ${config.tamano}\n` +
+    `• Tela: ${config.tela}\n` +
+    `• Color: ${config.color}\n` +
+    `• Textura: ${config.textura}\n` +
+    `• Acabados: ${config.acabados}\n` +
+    `• Cantidad: ${config.cantidad}\n` +
+    `• Total estimado: $${totalPrice} USD\n\n` +
+    `Quedo atento(a) para confirmar el pedido.`;
+  const waUrl = `https://wa.me/573172621528?text=${encodeURIComponent(msg)}`;
+  window.open(waUrl, '_blank');
+  document.getElementById('successOverlay').classList.add('visible');
+}
+
+updatePreview();
+</script>
+</body>
+</html>
